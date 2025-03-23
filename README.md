@@ -19,7 +19,7 @@ And so... **AgriMass** was born. 🚀
 1. **Download the repository**
 
      ```bash
-         git clone 
+         git clone https://github.com/Uriel-SG/AgriMass.git
       ```    
 2. **Prepare your recipient list** by adding email addresses to the `mailing_list.txt` file  
 3. **Design a professional email template** using a **free MailChimp account**  
