@@ -25,17 +25,17 @@ And so... **AgriMass** was born. 🚀
 3. **Design a professional email template** using a **free MailChimp account**  
 4. **Copy the template in ***HTML*** format**  
 5. **Run AgriMass**:  
-   - If using your own mail server with your domain:  
+   - If using your own mail server with your domain, remember to modify `agrimass.py` with your **smtp server** and your **server credentials**. After that, you are ready:  
      ```bash
      python agrimass.py
      ```  
-   - If using a Gmail account:  
+   - If using a Gmail account, keep in mind that Gmail imposes a daily limit on sent emails. If this works for your needs, feel free to proceed:  
      ```bash
      python agrimass_gmail.py
      ```  
 6. **Enter your credentials**, email subject, and ***paste the HTML content of your MailChimp template***.  
    *(If the terminal warns you about a long input, just proceed and confirm.)*  
-7. Press Enter... and **BOOM! Your emails are sent.**  
+7. Press Enter... and ***BOOM! Your emails are sent.*** 
 
 🎉 **Simple, fast, and free!**  
 
