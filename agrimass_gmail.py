@@ -3,7 +3,6 @@ from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 import time
 
-# Dati di accesso
 sender_email = str(input("Inserisci la tua email di gmail: "))
 
 password = str(input("Inserisci la tua password per le app: "))
@@ -15,7 +14,7 @@ print("Inserisci il testo html e lascia una riga vuota per terminare:")
 lines = []
 while True:
     line = input()
-    if line == "":  # Se l'utente preme solo Invio, termina l'input
+    if line == "":  # Premendo solo Invio, termina l'input
         break
     lines.append(line)
 
@@ -34,14 +33,11 @@ for mail in receiver_email:
     msg['Subject'] = subject
 
     # Corpo dell'email in formato HTML
-    
-
-    # Aggiungi il corpo dell'email
     msg.attach(MIMEText(html_content, 'html'))
 
     # Connessione al server SMTP (ad esempio Gmail)
     server = smtplib.SMTP('smtp.gmail.com', 587)
-    server.starttls()  # Avvia la connessione sicura
+    server.starttls()
     server.login(sender_email, password)
 
     # Invia l'email
