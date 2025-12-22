@@ -33,7 +33,7 @@ And so... **AgriMass** was born. 🚀
      ```bash
      python agrimass_gmail.py
      ```  
-6. **Enter your credentials**, email subject, and ***paste the HTML content of your MailChimp template***.  
+6. **Enter your credentials**, email subject, and ***paste the HTML content of your MailChimp/beefree template***.  
    *(If the terminal warns you about a long input, just proceed and confirm.)*  
 7. Press Enter... and ***BOOM! Your emails are sent.*** 
 
