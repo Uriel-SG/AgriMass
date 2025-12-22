@@ -22,7 +22,7 @@ And so... **AgriMass** was born. 🚀
          git clone https://github.com/Uriel-SG/AgriMass.git
       ```    
 2. **Prepare your recipient list** by adding email addresses to the `mailing_list.txt` file  
-3. **Design a professional email template** using a **free MailChimp account**  
+3. **Design a professional email template** using a **free MailChimp account** or on **[beefree.io](https://beefree.io/)** (recommended)
 4. **Copy the template in ***HTML*** format**  
 5. **Run AgriMass**:  
    - If using your own mail server with your domain, remember to modify `agrimass.py` with your **smtp server** and your **server credentials**. After that, you are ready:  
