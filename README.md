@@ -12,7 +12,7 @@ My company needed a mass mailing tool to reach all our customers, and I was task
 > *Why do all these tools come with restrictions or require a paid plan?*  
 > *Why not create an independent, unlimited, and free tool that does the same job?*  
 
-And so... **AgriMass** was born. 🚀  
+And so... ***AgriMass*** *was born.* 🚀  
 
 ---
 ## What is AgriMass?
@@ -44,7 +44,7 @@ It offers seamless integration with ***your own SMTP servers***, ***Gmail***, an
      ```
    - If using a **Microsoft** 365 account: configuration instructions and Graph API setup are covered *in the next sectiion*.
     
-6. **Enter your credentials**, email subject, and ***paste the HTML content of your MailChimp/beefree template***.  
+6. **Enter your credentials**, email subject, and *paste the HTML content of your MailChimp/beefree template*.  
    *(If the terminal warns you about a long input, just proceed and confirm.)*  
 7. Press Enter... and ***BOOM! Your emails are sent.*** 
 
@@ -58,47 +58,47 @@ It offers seamless integration with ***your own SMTP servers***, ***Gmail***, an
 
 Follow these steps to register your application in the Azure portal:
 
-- *Access the Portal:* Navigate to portal.azure.com and log in with an Administrator account.
+- *Access the Portal:* Navigate to [https://portal.azure.com](portal.azure.com) and log in with an Administrator account.
 
-- *Microsoft Entra ID:* From the left-hand menu, select "Microsoft Entra ID".
+- *Microsoft Entra ID:* From the left-hand menu, select `Microsoft Entra ID`.
 
-- *App Registrations:* Under the "Manage" section on the left sidebar, click on "App registrations".
+- *App Registrations:* Under the `Manage` section on the left sidebar, click on `App registrations`.
 
-- *Create New:* Click the "+ New registration" button.
+- *Create New:* Click the `+ New registration` button.
 
 - *Initial Setup:*
 
      a. Enter a Name for your application.
 
-     b. If prompted for a "Redirect URI", enter: http://localhost.
+     b. If prompted for a "Redirect URI", enter: `http://localhost`.
 
-     c. Click "Register".
+     c. Click `Register`.
 
 - *Save Credentials:* Once created, the application overview will display several details. Copy and save the following:
 
-     a. Application (client) ID
+     a. **Application (client) ID**
 
-     b. Directory (tenant) ID
+     b. **Directory (tenant) ID**
 
 - *Configure Permissions:*
 
-     a. Inside your registered app, click on "API permissions" (or "Add Permission").
+     a. Inside your registered app, click on `API permissions` (or `Add Permission`).
 
-     b. Select "Microsoft Graph".
+     b. Select `Microsoft Graph`.
 
-     c. Choose "Delegated permissions".
+     c. Choose `Delegated permissions`.
 
-     d. Search for and check the "mail.send" permission.
+     d. Search for and check the `mail.send` permission.
 
-     e. Click "Add permissions" to finalize.
+     e. Click `Add permissions` to finalize.
 
-- *Authentication Verification:* To ensure everything is correct, click on "Authentication" in the left menu and verify that the URI is present. If it is missing:
+- *Authentication Verification:* To ensure everything is correct, click on `Authentication` in the left menu and verify that the URI is present. If it is missing:
 
-     a. Click "+ Add a platform".
+     a. Click `+ Add a platform`.
 
-     b. Select "Mobile and desktop applications".
+     b. Select `Mobile and desktop applications`.
 
-     c. Enter the URI: http://localhost.
+     c. Enter the URI: `http://localhost`.
 
 *Note: Ensure that you grant admin consent for the permissions if your organization's policy requires it to enable the mail.send functionality.*
 
