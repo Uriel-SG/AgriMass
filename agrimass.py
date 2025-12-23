@@ -2,57 +2,95 @@ import smtplib
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 import time
+import getpass
 
-# Dati di accesso
-sender_email = str(input("Inserisci la tua email: "))
+def print_header():
+    header = r"""
+             Welcome to
+  /$$$$$$                      /$$ /$$      /$$                             
+ /$$__  $$                    |__/| $$$    /$$$                             
+| $$  \ $$  /$$$$$$   /$$$$$$  /$$| $$$$  /$$$$  /$$$$$$   /$$$$$$$ /$$$$$$$
+| $$$$$$$$ /$$__  $$ /$$__  $$| $$| $$ $$/$$ $$ |____  $$ /$$_____//$$_____/
+| $$__  $$| $$  \ $$| $$  \__/| $$| $$  $$$| $$  /$$$$$$$|  $$$$$$|  $$$$$$ 
+| $$  | $$| $$  | $$| $$      | $$| $$\  $ | $$ /$$__  $$ \____  $$\____  $$
+| $$  | $$|  $$$$$$$| $$      | $$| $$ \/  | $$|  $$$$$$$ /$$$$$$$//$$$$$$$/
+|__/  |__/ \____  $$|__/      |__/|__/     |__/ \_______/|_______/|_______/ 
+           /$$  \ $$                                                        
+          |  $$$$$$/                                                        
+           \______/                                                         
+    
 
-password = str(input("Inserisci la tua password: "))
+    """
+    print(header)
 
-subject = str(input("Inserisci l'oggetto della mail: "))
+def run_agrimass_smtp():
+    print_header()
+    
+    # 1. Server Connection Details
+    smtp_server = input("Enter SMTP Server address (e.g., mail.domain.com): ")
+    try:
+        smtp_port = int(input("Enter SMTP Port (usually 587 or 465): "))
+    except ValueError:
+        print("Invalid port. Defaulting to 587.")
+        smtp_port = 587
 
-print("Inserisci il testo html e lascia una riga vuota per terminare:")
+    # 2. Authentication & Sender Details
+    auth_user = input("Enter your SMTP Username (login): ")
+    password = getpass.getpass("Enter your SMTP Password (hidden): ")
+    sender_email = input("Enter the 'From' email address (Sender Display): ")
 
-lines = []
-while True:
-    line = input()
-    if line == "":  # Se l'utente preme solo Invio, termina l'input
-        break
-    lines.append(line)
+    # 3. Email Content
+    subject = input("Enter Email Subject: ")
+    print("\nPaste your HTML code below. Type 'END' on a new line and press Enter to finish:")
+    
+    lines = []
+    while True:
+        line = input()
+        if line.strip().upper() == "END":
+            break
+        lines.append(line)
+    html_content = "\n".join(lines)
 
-html_content = "\n".join(lines)
+    # 4. Loading Recipients
+    try:
+        with open("mailing_list.txt", "r") as file:
+            recipients = [line.strip() for line in file if line.strip()]
+    except FileNotFoundError:
+        print("Error: 'mailing_list.txt' not found. Please create it and restart.")
+        return
 
-with open("mailing_list.txt", "r") as file:
-    receiver_email = file.read().splitlines()
+    # 5. Sending Process
+    server = None
+    try:
+        print(f"\nConnecting to {smtp_server}...")
+        server = smtplib.SMTP(smtp_server, smtp_port)
+        server.starttls()
+        server.login(auth_user, password)
+        print("Authentication successful!\n")
 
-# Connessione al server SMTP del tuo dominio
-try:
-    server = smtplib.SMTP('YOUR-SMTP-SERVER', 587)  # Modifica con il server SMTP giusto
-    server.starttls()  # Avvia la connessione sicura
-    server.login('SERVER-USER', 'PASSWORD')  # Nome utente e password per SMTP
-    print("Connessione riuscita!")
+        for index, recipient in enumerate(recipients, 1):
+            print(f"[{index}/{len(recipients)}] Sending to {recipient}...")
+            
+            msg = MIMEMultipart()
+            msg['From'] = sender_email
+            msg['To'] = recipient
+            msg['Subject'] = subject
+            msg.attach(MIMEText(html_content, 'html'))
 
-    for mail in receiver_email:
-        print(f"Invio in corso a {mail}")
+            server.sendmail(sender_email, recipient, msg.as_string())
+            print(f"Successfully sent to {recipient}")
+            
+            # Anti-spam delay
+            time.sleep(3)
 
-        # Creazione del messaggio
-        msg = MIMEMultipart()
-        msg['From'] = sender_email  # Il tuo indirizzo di email
-        msg['To'] = mail
-        msg['Subject'] = subject
+        print("\nCampaign completed successfully!")
 
-        # Aggiungi il corpo dell'email
-        msg.attach(MIMEText(html_content, 'html'))
+    except Exception as e:
+        print(f"\nAn error occurred: {e}")
+    
+    finally:
+        if server:
+            server.quit()
 
-        # Invia l'email
-        server.sendmail(sender_email, mail, msg.as_string())
-        print(f"Email inviata con successo a {mail}!")
-
-        # Pausa tra l'invio di un'email e l'altra
-        time.sleep(4)
-
-except smtplib.SMTPException as e:
-    print(f"Errore SMTP: {e}")
-
-finally:
-    # Chiudi la connessione al server SMTP
-    server.quit()
+if __name__ == "__main__":
+    run_agrimass_smtp()
