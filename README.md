@@ -1,6 +1,8 @@
 # AgriMass
 *Free mass mail marketing tool*
-![AgriMass2](https://github.com/user-attachments/assets/5dfb2229-4f65-4d91-96b5-f66479351680)
+
+<img width="769" height="439" alt="agrimass" src="https://github.com/user-attachments/assets/7770c228-1ed8-46ef-98d6-16d11c1dc520" />
+
 
 # AgriMass - A Free and Unlimited Mass Mailing Tool  
 
@@ -50,21 +52,21 @@ It offers seamless integration with ***your own SMTP servers***, ***Gmail***, an
 
 ---
 
-## Microsoft 365 Instruction
+## 🪟 Microsoft 365 Instruction
 
 ### 1. Azure Configuration
 
 Follow these steps to register your application in the Azure portal:
 
-- Access the Portal: Navigate to portal.azure.com and log in with an Administrator account.
+- *Access the Portal:* Navigate to portal.azure.com and log in with an Administrator account.
 
-- Microsoft Entra ID: From the left-hand menu, select "Microsoft Entra ID".
+- *Microsoft Entra ID:* From the left-hand menu, select "Microsoft Entra ID".
 
-- App Registrations: Under the "Manage" section on the left sidebar, click on "App registrations".
+- *App Registrations:* Under the "Manage" section on the left sidebar, click on "App registrations".
 
-- Create New: Click the "+ New registration" button.
+- *Create New:* Click the "+ New registration" button.
 
-- Initial Setup:
+- *Initial Setup:*
 
      a. Enter a Name for your application.
 
@@ -72,13 +74,13 @@ Follow these steps to register your application in the Azure portal:
 
      c. Click "Register".
 
-- Save Credentials: Once created, the application overview will display several details. Copy and save the following:
+- *Save Credentials:* Once created, the application overview will display several details. Copy and save the following:
 
      a. Application (client) ID
 
      b. Directory (tenant) ID
 
-- Configure Permissions:
+- *Configure Permissions:*
 
      a. Inside your registered app, click on "API permissions" (or "Add Permission").
 
@@ -90,7 +92,7 @@ Follow these steps to register your application in the Azure portal:
 
      e. Click "Add permissions" to finalize.
 
-- Authentication Verification: To ensure everything is correct, click on "Authentication" in the left menu and verify that the URI is present. If it is missing:
+- *Authentication Verification:* To ensure everything is correct, click on "Authentication" in the left menu and verify that the URI is present. If it is missing:
 
      a. Click "+ Add a platform".
 
@@ -111,13 +113,51 @@ The main advantage is flexibility: as an admin, you can create as many shared ma
 
 - **Configuration Steps:**
 
-     a. Permissions: You must have "Send As" permissions for the specific mailbox. This is managed through the Microsoft 365 Admin Center: select the desired shared mailbox and add your user account to the "Send As" permission group.
+     a. *Permissions:* You must have "Send As" permissions for the specific mailbox. This is managed through the Microsoft 365 Admin Center: select the desired shared mailbox and add your user account to the "Send As" permission group.
 
-     b. Example: you may granted yourself permissions for no-reply@yourdomain.com.
+     b. *Example:* you may granted yourself permissions for no-reply@yourdomain.com.
 
-     c. Sending Strategy: Once permissions are active, you can use any of these shared addresses as your sender identity, making it ideal for professional bulk messaging or departmental notifications.
+     c. *Sending Strategy:* Once permissions are active, you can use any of these shared addresses as your sender identity, making it ideal for professional bulk messaging or departmental notifications.
 
 **Ready to Go: To start sending, simply configure the Client ID, Tenant ID, and the Shared Mailbox address within the Python script. Once these parameters are set, your environment is fully ready for deployment.**
+
+### 3. Running the script
+
+Once your configuration is complete, follow these steps to start your campaign:
+
+- *Launch agrimass_azure.py:* Run the Python script from your terminal.
+
+- *Authentication*: A browser window will automatically open. Log in with your Microsoft/Google account to authorize the session.
+
+- *Select Recipients*: Choose the .txt file containing your recipient list (one email per line).
+
+- *Email Subject*: Enter your desired subject line directly into the terminal.
+
+- *Insert Email Body*: Paste your previously copied HTML code into the prompt.
+
+- *Send Command*: After pasting the HTML, press Enter, type END on a new line, and press Enter again to confirm.
+
+- *Delivery*: The script will begin sending emails automatically, with a 3-second delay between each message to ensure stability and avoid spam filters.
+
+---
+
+## E-mail design (BeeFree)
+
+*This section provides an optional but very good workflow to easily create professional HTML email templates.*
+
+To design your custom email:
+
+1. *Access the Platform "BeeFree"* as mentioned before: Go to **[beefree.io](https://beefree.io/)** and log in to your account.
+
+2. *Design your Template:* Create a new template from scratch or use their drag-and-drop editor to customize it to your liking.
+
+3. *Export the Code:* Click on "Export" and copy the HTML Code of your finished template.
+
+     - *Note: The free tier typically allows up to 6 exports per month.*
+
+4. *Save Locally:* You can paste the copied HTML into a .txt or .html file to store it locally for future use within AgriMass.
+
+***Once you launch AgriMass, when prompted for the email body, simply paste the copied HTML code—and you're all set!***
 
 ---
 
