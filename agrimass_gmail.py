@@ -2,50 +2,88 @@ import smtplib
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 import time
+import getpass
 
-sender_email = str(input("Inserisci la tua email di gmail: "))
+def print_header():
+    header = r"""
+             Welcome to
+  /$$$$$$                      /$$ /$$      /$$                             
+ /$$__  $$                    |__/| $$$    /$$$                             
+| $$  \ $$  /$$$$$$   /$$$$$$  /$$| $$$$  /$$$$  /$$$$$$   /$$$$$$$ /$$$$$$$
+| $$$$$$$$ /$$__  $$ /$$__  $$| $$| $$ $$/$$ $$ |____  $$ /$$_____//$$_____/
+| $$__  $$| $$  \ $$| $$  \__/| $$| $$  $$$| $$  /$$$$$$$|  $$$$$$|  $$$$$$ 
+| $$  | $$| $$  | $$| $$      | $$| $$\  $ | $$ /$$__  $$ \____  $$\____  $$
+| $$  | $$|  $$$$$$$| $$      | $$| $$ \/  | $$|  $$$$$$$ /$$$$$$$//$$$$$$$/
+|__/  |__/ \____  $$|__/      |__/|__/     |__/ \_______/|_______/|_______/ 
+           /$$  \ $$                                                        
+          |  $$$$$$/                                                        
+           \______/            GMAIL                                                 
+    
 
-password = str(input("Inserisci la tua password per le app: "))
+    """
+    print(header)
 
-subject = str(input("Inserisci l'oggetto della mail: "))
+def run_agrimass_gmail():
+    print_header()
+    
+    # 1. Credentials
+    sender_email = input("Enter your Gmail address: ")
+    # Using getpass for security (hides the App Password while typing)
+    password = getpass.getpass("Enter your Gmail App Password (hidden): ")
 
-print("Inserisci il testo html e lascia una riga vuota per terminare:")
+    # 2. Email Content
+    subject = input("Enter Email Subject: ")
+    print("\nPaste your HTML code below. Type 'END' on a new line and press Enter to finish:")
+    
+    lines = []
+    while True:
+        line = input()
+        if line.strip().upper() == "END":
+            break
+        lines.append(line)
+    html_content = "\n".join(lines)
 
-lines = []
-while True:
-    line = input()
-    if line == "":  # Premendo solo Invio, termina l'input
-        break
-    lines.append(line)
+    # 3. Loading Recipients
+    try:
+        with open("mailing_list.txt", "r") as file:
+            recipients = [line.strip() for line in file if line.strip()]
+    except FileNotFoundError:
+        print("\n[!] Error: 'mailing_list.txt' not found. Please create it and restart.")
+        return
 
-html_content = "\n".join(lines)
+    # 4. Sending Process
+    server = None
+    try:
+        print(f"\nConnecting to Gmail SMTP server...")
+        server = smtplib.SMTP('smtp.gmail.com', 587)
+        server.starttls()
+        server.login(sender_email, password)
+        print("Authentication successful!\n")
 
-with open("mailing_list.txt", "r") as file:
-    receiver_email = file.read().splitlines()
+        for index, recipient in enumerate(recipients, 1):
+            print(f"[{index}/{len(recipients)}] Sending to {recipient}...")
+            
+            msg = MIMEMultipart()
+            msg['From'] = sender_email
+            msg['To'] = recipient
+            msg['Subject'] = subject
+            msg.attach(MIMEText(html_content, 'html'))
 
-for mail in receiver_email:
-    print(f"Invio in corso a {mail}")
+            server.sendmail(sender_email, recipient, msg.as_string())
+            print(f"Successfully sent to {recipient}")
+            
+            # Anti-spam delay (Gmail is strict, 3-4 seconds is ideal)
+            time.sleep(4)
 
-    # Creazione del messaggio
-    msg = MIMEMultipart()
-    msg['From'] = sender_email
-    msg['To'] = mail
-    msg['Subject'] = subject
+        print("\nCampaign completed successfully!")
 
-    # Corpo dell'email in formato HTML
-    msg.attach(MIMEText(html_content, 'html'))
+    except Exception as e:
+        print(f"\nAn error occurred: {e}")
+        print("Tip: Make sure you are using a 16-character 'App Password', not your main account password.")
+    
+    finally:
+        if server:
+            server.quit()
 
-    # Connessione al server SMTP (ad esempio Gmail)
-    server = smtplib.SMTP('smtp.gmail.com', 587)
-    server.starttls()
-    server.login(sender_email, password)
-
-    # Invia l'email
-    server.sendmail(sender_email, mail, msg.as_string())
-
-    # Chiudi la connessione al server SMTP
-    server.quit()
-
-    print(f"Email inviata con successo a {mail}!")
-
-    time.sleep(4)
+if __name__ == "__main__":
+    run_agrimass_gmail()
